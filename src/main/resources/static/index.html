@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestão - Faculdade</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <link href="custom.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <div class="main-container">
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+      <div class="mx-auto text-center">
+        <span class="navbar-brand mb-0 h1 d-block">Sistema de Gestão Acadêmica</span>
+        <small class="text-white-50">Gerenciamento de Alunos e Cobranças</small>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <div class="container mt-4">
+    <div style="max-width: 1200px; margin-left: auto; margin-right: auto;">
+      <h2>Gerenciamento de Alunos</h2>
+
+      <!-- Botão para abrir modal de cadastro -->
+      <div class="mb-4 d-flex justify-content-start">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAluno">
+          <i class="bi bi-plus-circle"></i> Cadastrar Novo Aluno
+        </button>
+      </div>
+
+
+
+      <!-- Filtro de Busca -->
+      <div class="mb-3">
+        <input type="text" class="form-control" id="filtroAlunos" placeholder="Buscar alunos (nome, RA, email...)" />
+      </div>
+    </div>
+
+
+    <!-- Lista de Alunos -->
+    <div class="card" style="max-width: 1200px; margin-left: auto; margin-right: auto;">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Lista de Alunos</h5>
+        <button class="btn btn-sm btn-primary" onclick="carregarAlunos()">
+          Atualizar
+        </button>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>RA</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Mensalidade</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="alunosTableBody">
+              <tr>
+                <td colspan="6" class="text-center">Carregando...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Botão para abrir modal gerar cobrança -->
+    <div class="mt-5" style="max-width: 1200px; margin: 8px auto 0 auto;">
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalGerarCobranca">
+        <i class="bi bi-plus-circle"></i> Gerar Cobrança
+      </button>
+    </div>
+
+    <!-- Últimas Cobranças Geradas -->
+    <div class="card mt-3" style="max-width: 1200px; margin-left: auto; margin-right: auto;">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Últimas Cobranças Geradas</h5>
+        <button class="btn btn-sm btn-primary" onclick="carregarCobrancas()">
+          Atualizar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Aluno (RA)</th>
+                <th>Linha Digitável</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Vencimento</th>
+                <th>Gerado em</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="cobrancasTableBody">
+              <tr>
+                <td colspan="6" class="text-center">Carregando...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Modal de Cadastro/Edição de Aluno -->
+    <div class="modal fade" id="modalAluno" tabindex="-1" aria-labelledby="modalAlunoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAlunoLabel">
+              Cadastrar Novo Aluno
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="alunoForm">
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="nome" class="form-label">Nome</label>
+                  <input type="text" class="form-control" id="nome" required />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="ra" class="form-label">RA</label>
+                  <input type="text" class="form-control" id="ra" required />
+                </div>
+
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" required />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="senha" class="form-label">Senha</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="senha" required />
+                    <span class="input-group-text" style="cursor: pointer;" id="toggleSenhaBtn" onclick="toggleSenha()">
+                      <i class="bi bi-eye"></i>
+                    </span>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+              <div class="row mb-3">
+
+                <div class="col-md-6">
+                  <label for="mensalidade" class="form-label">Mensalidade (R$)</label>
+                  <input type="text" class="form-control" id="mensalidade" required />
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-success" id="btnSubmit" onclick="submitForm()">
+              Cadastrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Gerar Cobrança -->
+    <div class="modal fade" id="modalGerarCobranca" tabindex="-1" aria-labelledby="modalGerarCobrancaLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalGerarCobrancaLabel">Gerar Cobrança</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <form id="formGerarCobranca">
+
+              <div class="mb-3 position-relative">
+                <label for="searchAluno" class="form-label">Aluno</label>
+                <input type="text" class="form-control" id="searchAluno" placeholder="Buscar aluno por nome ou RA..."
+                  autocomplete="off" />
+                <ul class="list-group position-absolute w-100" id="listaAlunosDropdown"
+                  style="z-index: 1055; max-height: 150px; overflow-y: auto; display: none;"></ul>
+              </div>
+
+              <div class="mb-3">
+                <label for="valorCobranca" class="form-label">Valor (R$)</label>
+                <input type="text" class="form-control" id="valorCobranca" placeholder="R$ 0,00" />
+              </div>
+
+              <div class="mb-3">
+                <label for="dataVencimento" class="form-label">Data de Vencimento</label>
+                <input type="date" class="form-control" id="dataVencimento" required />
+              </div>
+
+            </form>
+
+
+            <div id="msgGerarCobranca" class="mt-2"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success" onclick="gerarCobranca()">Gerar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal Alterar Status -->
+    <div class="modal fade" id="modalAlterarStatus" tabindex="-1" aria-labelledby="modalAlterarStatusLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAlterarStatusLabel">Alterar Status da Cobrança</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formAlterarStatus">
+              <div class="mb-3">
+                <label for="selectStatus" class="form-label">Novo Status</label>
+                <select id="selectStatus" class="form-select">
+                  <option value="EM_ABERTO">Em Aberto</option>
+                  <option value="PAGO">Pago</option>
+                  <option value="VENCIDO">Vencido</option>
+                  <option value="CANCELADO">Cancelado</option>
+                </select>
+              </div>
+            </form>
+            <div id="msgAlterarStatus" class="mt-2"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success" onclick="confirmarAlterarStatus()">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Estilo base */
+body {
+  display: flex;
+  justify-content: center; /* centraliza horizontal */
+  align-items: center;    /* centraliza vertical */
+  background-color: #f0f6f5;
+  color: #017a6b;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 0;
+  margin-bottom: 0;
+  min-height: 100vh; /* garantir altura total da viewport */
+}
+
+/* Navbar personalizada */
+.navbar {
+  background-color: #017a6b !important;
+  box-shadow: 0 4px 8px rgba(1, 122, 107, 0.4);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white !important;
+}
+
+.navbar small {
+  color: #a1d0c9 !important;
+}
+
+/* Container principal com borda, sombra e radius */
+.main-container {
+  max-width: 1200px;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(1, 122, 107, 0.3);
+  padding: 1rem 1.5rem;
+  border: 3px solid #017a6b;
+  overflow: hidden;
+  /* Remover margens verticais para não conflitar com flexbox */
+  margin: 0;
+}
+
+/* Títulos */
+h2, h5 {
+  color: #017a6b;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+
+
+/* Inputs com bordas arredondadas e foco chamativo */
+.form-control {
+  border-radius: 10px;
+  border: 1.5px solid #00ab8d;
+  padding: 0.45rem 1rem; /* padding reduzido */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.form-control:focus {
+  border-color: #017a6b;
+  box-shadow: 0 0 8px #00ab8d;
+  outline: none;
+  background-color: #f7fffd;
+}
+
+/* Tabela estilizada */
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #e8f5f2;
+}
+
+.table thead th {
+  background-color: #017a6b;
+  color: white;
+  border-color: #017a6b;
+}
+
+.table tbody td,
+.table thead th {
+  vertical-align: middle;
+  border-color: #d6f0eb;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+}
+
+/* Bordas arredondadas para cards e tabelas */
+.card,
+.table-responsive {
+  border-radius: 0.75rem;
+  border: 1px solid #00ab8d;
+  box-shadow: 0 4px 16px rgba(1, 122, 107, 0.15);
+  margin-bottom: 1rem;
+}
+
+/* Alertas e mensagens */
+.alert {
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Placeholder com cor mais clara */
+::placeholder {
+  color: #9ccfc5;
+}
