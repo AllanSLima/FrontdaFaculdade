@@ -1,5 +1,5 @@
 // URL base da API
-const API_URL = 'https://front-para-a-faculdade.onrender.com';
+const API_URL = 'https://api-da-faculdade.onrender.com';
 
 // Variável para controlar modo de edição
 let modoEdicao = false;
